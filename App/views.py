@@ -44,3 +44,9 @@ def student_update(request, studentid):
             return index_views(request)
     diction = {'student_form': student_form}
     return render(request, 'student_update.html', context=diction)
+
+def student_delete(request, studentid):
+    student = student_model.objects.get(pk=studentid).delete()
+    diction = {'delete':"delete done"}
+    return render(request, 'student_delete.html', context=diction)
+
