@@ -3,4 +3,5 @@
 <h3>Student Information Page </h3>
 <h3>Student name : {{ studentinfo.name }}</h3>
 <h3>Serial Num   : {{ studentinfo.pk }}</h3>
+    <a href="{% url 'student_update' studentid=studentinfo.id%}" class="btn btn-primary">Update</a>
 {% endblock %}

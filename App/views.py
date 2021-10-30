@@ -5,9 +5,9 @@ from App.models import student_model
 
 # Create your views here.
 def index_views(request):
-    #For view data
+    # For view data
     student_list = student_model.objects.order_by('name')
-    #End View
+    # End View
     diction = {'title': "This is index page",
                'student_list': student_list}
     return render(request, 'index.html', context=diction)
@@ -21,15 +21,26 @@ def student_views(request):
 
         if student_form.is_valid():
             student_form.save(commit=True)
-            return index_views(request)
         # End insert
 
     diction = {'title': "This is Student page", 'student_form': student_form}
     return render(request, 'student.html', context=diction)
 
-def studentinfo_views(request,studentid):
+
+def studentinfo_views(request, studentid):
     studentinfo = student_model.objects.get(pk=studentid)
     diction = {'title': "This is StudentInformation page",
-               'studentinfo':studentinfo}
+               'studentinfo': studentinfo}
     return render(request, 'student_info.html', context=diction)
 
+
+def student_update(request, studentid):
+    studentinfo = student_model.objects.get(pk=studentid)
+    student_form = forms.student_form(instance=studentinfo)
+    if request.method == "POST":
+        form = forms.student_form(request.POST, instance=studentinfo)
+        if form.is_valid():
+            form.save(commit=True)
+            return index_views(request)
+    diction = {'student_form': student_form}
+    return render(request, 'student_update.html', context=diction)
